@@ -1,0 +1,9 @@
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\bin\Debug\DrumBeatGen.exe.config
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\bin\Debug\DrumBeatGen.exe
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\bin\Debug\DrumBeatGen.pdb
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\obj\Debug\DrumBeatGen.csprojResolveAssemblyReference.cache
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\obj\Debug\DrumBeatGen.Form1.resources
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\obj\Debug\DrumBeatGen.Properties.Resources.resources
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\obj\Debug\DrumBeatGen.csproj.GenerateResource.Cache
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\obj\Debug\DrumBeatGen.exe
+c:\users\seth\documents\visual studio 2017\Projects\DrumBeatGen\DrumBeatGen\obj\Debug\DrumBeatGen.pdb
