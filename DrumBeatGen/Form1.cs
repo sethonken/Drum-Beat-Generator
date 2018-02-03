@@ -87,6 +87,10 @@ namespace DrumBeatGen {
         private void button1_Click(object sender, EventArgs e) {
             pattern = null;
             pattern = new Pattern(this.comboBox1.Text, Int32.Parse(this.textBox3.Text), Int32.Parse(this.textBox5.Text), this.comboBox2.Text);
+
+            //reset play button
+            pattern.setPlay(false);
+            this.button2.Text = "Play";
         }
     }
 }
