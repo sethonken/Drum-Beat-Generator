@@ -14,17 +14,20 @@ namespace DrumBeatGen {
         Pattern pattern;
         bool restart; //used to end play thread when new pattern is created
         System.Timers.Timer timer;
+        int patternBarTick;
 
         public Form1() {
             InitializeComponent();
             restart = false;
             timer = new System.Timers.Timer();
             timer.Elapsed += OnTimedEvent;
+            patternBarTick = 0;
         }
 
         private void play() {
-            while (pattern.getPlay()) {
+            while (true) { //continuously loop through pattern
                 for (int i = 0; i < pattern.getGridSize(); i++) {
+                    patternBarTick = i + 1;
                     //set timer
                     timer.Enabled = true;
 
@@ -34,13 +37,13 @@ namespace DrumBeatGen {
                     while (pattern == null || !pattern.getPlay()) {
                         if (restart) {
                             //reset pattern bar location
-                            this.panel6.Location = new System.Drawing.Point(26, 376);
+                            this.panel6.Location = new System.Drawing.Point(0, 0);
                             this.Refresh();
                             return;
                         }
                     }
                     //move pattern bar location
-                    this.panel6.Location = new System.Drawing.Point(26 + (int)((i + 1) / (1.0 * pattern.getGridSize()) * 252), 376);
+                    this.panel6.Location = new System.Drawing.Point((int)((patternBarTick / (1.0 * pattern.getGridSize())) * panel9.Width), 0);
                     this.Refresh();
 
                     //loop to keep with bpm
@@ -50,7 +53,7 @@ namespace DrumBeatGen {
                 }
 
                 //reset pattern bar location
-                this.panel6.Location = new System.Drawing.Point(26, 376);
+                this.panel6.Location = new System.Drawing.Point(0, 0);
                 this.Refresh();
             }
         }
@@ -154,34 +157,51 @@ namespace DrumBeatGen {
             //set timer
             updateTimer();
 
+            //delete old snotes
+            foreach (Control c in this.panel9.Controls) {
+                if (c.Tag != null) {
+                    if (c.Height == this.pictureBox2.MinimumSize.Height && c.Visible) { //note picture
+                        c.Visible = false;
+                    }
+                }
+            }
+
             //draw snares on grid
             List<int> snare = pattern.getSnareList();
             foreach (int hit in snare) {
                 PictureBox pictureBox = copyPictureBox(this.pictureBox2);
-                pictureBox.Location = new System.Drawing.Point(pictureBox.Location.X + (int)((hit / (pattern.getGridSize() / (1.0 * pattern.getTickMultiplier()))) * 252), pictureBox.Location.Y);
-                this.Controls.Add(pictureBox);
-                pictureBox.BringToFront();
+                pictureBox.Location = new System.Drawing.Point(pictureBox.Location.X + (int)((hit / (pattern.getGridSize() / (1.0 * pattern.getTickMultiplier()))) * pictureBox1.Width), pictureBox.Location.Y);
+                initializePictureBox(pictureBox);
             }
 
             //draw kicks on grid
             List<int> kick = pattern.getKickList();
             foreach (int hit in kick) {
                 PictureBox pictureBox = copyPictureBox(this.pictureBox3);
-                pictureBox.Location = new System.Drawing.Point(pictureBox.Location.X + (int)((hit / (pattern.getGridSize() / (1.0 * pattern.getTickMultiplier()))) * 252), pictureBox.Location.Y);
-                this.Controls.Add(pictureBox);
-                pictureBox.BringToFront();
+                pictureBox.Location = new System.Drawing.Point(pictureBox.Location.X + (int)((hit / (pattern.getGridSize() / (1.0 * pattern.getTickMultiplier()))) * pictureBox1.Width), pictureBox.Location.Y);
+                initializePictureBox(pictureBox);
             }
 
             //bring pattern bar to front
             this.panel6.BringToFront();
         }
 
+        private void initializePictureBox(PictureBox pictureBox) {
+            pictureBox.Tag = (int)(this.panel9.MinimumSize.Width * (pictureBox.Location.X / (1.0 * this.panel9.Width)));
+            this.Controls.Add(pictureBox);
+            this.panel9.Controls.Add(pictureBox);
+            pictureBox.BringToFront();
+        }
+
         private PictureBox copyPictureBox(PictureBox pb) {
             PictureBox pictureBox = new PictureBox();
 
+            pictureBox.Anchor = pb.Anchor;
             pictureBox.BackColor = pb.BackColor;
             pictureBox.Image = pb.Image;
             pictureBox.Location = pb.Location;
+            pictureBox.MaximumSize = pb.MaximumSize;
+            pictureBox.MinimumSize = pb.MinimumSize;
             pictureBox.Name = pb.Name;
             pictureBox.Size = pb.Size;
             pictureBox.SizeMode = pb.SizeMode;
@@ -197,6 +217,35 @@ namespace DrumBeatGen {
 
         private void updateTimer() {
             timer.Interval = ((8.0 * 60000.0 / pattern.getBPM() / pattern.getGridSize()));
+        }
+
+        private void panel9_SizeChanged(object sender, EventArgs e) {
+            if (pattern == null) {
+                return;
+            }
+            //update kick position
+            foreach (Control c in this.panel9.Controls) {
+                if (c.Tag != null) {
+                    if (c.Height == this.pictureBox2.MinimumSize.Height && c.Visible) { //note picture
+                        Point p = c.Location;
+                        p.X = (int)((1.0 * Int32.Parse(c.Tag.ToString()) / panel9.MinimumSize.Width) * (panel9.Width));
+                        c.Location = p;
+                    }
+                }
+            }
+            this.panel6.Location = new System.Drawing.Point((int)(((1.0 * patternBarTick / pattern.getGridSize()) * panel9.Width)), 0);
+        }
+
+        private void Form1_ResizeBegin(object sender, EventArgs e) {
+            if (pattern != null) {
+                pattern.setPlay(false);
+            }
+        }
+
+        private void Form1_ResizeEnd(object sender, EventArgs e) {
+            if (String.Equals(this.button2.Text, "Pause") && pattern != null) {
+                pattern.setPlay(true);
+            }
         }
     }
 }

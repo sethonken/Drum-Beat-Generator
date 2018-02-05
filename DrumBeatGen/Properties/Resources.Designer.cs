@@ -113,6 +113,16 @@ namespace DrumBeatGen.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ride {
+            get {
+                object obj = ResourceManager.GetObject("ride", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap snare {
             get {
                 object obj = ResourceManager.GetObject("snare", resourceCulture);

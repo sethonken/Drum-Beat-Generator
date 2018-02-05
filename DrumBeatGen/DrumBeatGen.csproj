@@ -119,5 +119,23 @@
   <ItemGroup>
     <None Include="Resources\kickdrum3.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\board2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hihat1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hihat2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\board3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ride.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crash1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

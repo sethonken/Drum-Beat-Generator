@@ -8,6 +8,9 @@ using System.Threading.Tasks;
  * Image credits
  * -------------
  * Kit - http://www.clker.com/clipart-4464.html
+ * 
+ * Audio credits
+ * https://sampleswap.org/
  */
 
 namespace DrumBeatGen {
@@ -46,6 +49,13 @@ namespace DrumBeatGen {
             //values for note placements
             snare = new List<int>();
             kick = new List<int>();
+
+            //snare.Add(4);
+            //snare.Add(4 + 8);
+            //kick.Add(0);
+            //kick.Add(0 + 8);
+            //kick.Add(0 + 10);
+            //kick.Add(0 + 11);
         }
 
         public bool getPlay() {
